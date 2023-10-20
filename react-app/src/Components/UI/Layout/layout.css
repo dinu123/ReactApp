@@ -1,0 +1,18 @@
+.layout {
+    display: flex;
+    border: 1px solid #000;
+    padding: 10px;
+    width: 40%;
+}
+.child-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.filter-container ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+}

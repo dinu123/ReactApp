@@ -1,0 +1,21 @@
+.header-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.header-container section {
+    margin-bottom: 5px;
+}
+.top-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.refresh-icon {
+    padding: 0px 30px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+.search-input {
+    width: 100%;
+}

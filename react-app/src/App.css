@@ -1,5 +1,10 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+}
 h1 {
   margin: 0px;
   display: flex;
   justify-content: center;
+
 }
