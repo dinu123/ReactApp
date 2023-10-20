@@ -5,6 +5,7 @@
     border: 1px solid;
     padding: 10px 30px;
     border-radius: 5px;
+    flex: 1;
 }
 .card-inner-container {
     display: flex;
@@ -28,6 +29,23 @@
     border-radius: 20px;
     font-size: 12px;
 }
-text {
+.location {
     font-size: 14px;
+}
+
+.extra-location-info ul{
+    list-style-type: none;
+    padding: 0;
+    border-top: 1px solid;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.extra-location-info ul li {
+    padding: 10px 0px;
+}
+.extra-location-info ul li label {
+    font-weight: 700;
+    padding-right: 10px;
+    height: 30px;
 }
