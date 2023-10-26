@@ -7,6 +7,8 @@ import LocationDetails from './Components/LocarionDetails/locationDetails';
 import { gql } from '@apollo/client';
 import {useMutation} from '@apollo/client';
 import { Circles } from 'react-loader-spinner';
+import { RefreshContext } from './Context/refreshContext';
+import { TENT_CODE } from './Constant';
 
 
 
@@ -25,7 +27,8 @@ mutation Mutation($locationRemoveId: String!, $tenant: String!) {
 
 function App() {
   const[activeId, setActiveId] = useState('');
-  const[isListRefresh,setIsListRefresh] = useState(0);
+  /* const[isListRefresh,setIsListRefresh] = useState(0); */
+  const {isListRefresh,setIsListRefresh} = React.useContext(RefreshContext)
   const [isLoading,setIsLoading] = useState(false);
 
   const [locationRemove] = useMutation(DELETE_LOCATION);
@@ -37,12 +40,12 @@ function App() {
       try {
         const result = await locationRemove({
           variables: {  "locationRemoveId": id,
-          "tenant": "692627ef-fda8-4203-b108-e8e9f52ad410"
+          "tenant": TENT_CODE.code
         },
         });
   
         console.log('Location Remved:', result.data.locationRemove);
-        setIsListRefresh(prev => prev +1);
+        setIsListRefresh();
         setActiveId('');
         // Handle success or update the UI as needed
       } catch (error) {
@@ -66,7 +69,7 @@ function App() {
       <LocationCard onCardClikHandler = {cardClickHandler} key = {isListRefresh}/>
       {activeId && <LocationDetails locationId = {activeId} delteLocation = {deletehandler}/>}
     </div>
-  );
+  )
 }
 
 export default App;

@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import Card from '../UI/Card/card';
 import { Circles } from 'react-loader-spinner';
+import { TENT_CODE } from '../../Constant';
 
 
 const GET_LOCATION = gql`
@@ -30,7 +31,8 @@ query LocationRead($locationReadId: String!, $tenant: String!) {
 const LocationDetails = (props: any) => {
     const { locationId } = props;
     const { loading, error, data } = useQuery(GET_LOCATION, {
-        variables: { tenant: '692627ef-fda8-4203-b108-e8e9f52ad410', locationReadId: locationId },
+      fetchPolicy: 'network-only',
+        variables: { tenant: TENT_CODE.code, locationReadId: locationId },
     });
 
     if (loading) return <Circles

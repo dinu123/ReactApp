@@ -6,9 +6,11 @@ import Layout from "../UI/Layout/Layout";
 import { useState } from "react";
 import { Circles } from 'react-loader-spinner'
 import './location.css'
+import CustomPagination from '../Pagination/pagination';
+import { TENT_CODE } from '../../Constant';
 const GET_LOCATIONS = gql`
-  query LocationList($tenant: String!, $orderBy: OrderBy12,$order: Order13,$search: String) {
-    locationList(tenant: $tenant, orderBy: $orderBy,  order: $order, search: $search) {
+  query LocationList($tenant: String!, $orderBy: OrderBy12,$order: Order13,$search: String,$page: Int) {
+    locationList(tenant: $tenant, orderBy: $orderBy,  order: $order, search: $search, page: $page) {
       pages
       resources {
         address
@@ -25,14 +27,16 @@ const GET_LOCATIONS = gql`
 const LocationCard = (props: any) => {
     const [search, setSearch] = useState('');
     const [isRefresh, setIsRefresh] = useState(false);
+    const [pageNumber,setPageNumber] = useState(0);
     const { loading, error, data, refetch } = useQuery(GET_LOCATIONS, {
         fetchPolicy: 'network-only',
-        variables: { tenant: '692627ef-fda8-4203-b108-e8e9f52ad410', "orderBy": "updated", "order": "desc", "search": search },
+        variables: { tenant: TENT_CODE.code, "orderBy": "updated", "order": "desc", "search": search, "page":pageNumber },
     });
     if (error) return <p>Error: {error.message}</p>;
 
     // Access the data and render it in your component
     const locations = data?.locationList?.resources;
+    const totalNumberOfPages = data?.locationList?.pages;
 
     const locationSearchHandler = (value: any) => {
         setSearch(value);
@@ -62,6 +66,13 @@ const LocationCard = (props: any) => {
             {!loading && locations?.map((rec: any) => {
                 return <Card data={rec} key={rec.id} cardClick={props.onCardClikHandler} isEditable={false} />
             })}
+
+            {totalNumberOfPages
+               && <CustomPagination maxPages = {totalNumberOfPages} acivePageNumber = {pageNumber} onClickHandler = {(value:any) => {
+                    setPageNumber(value);
+               }}/>
+           }
+            
 
         </Layout>
     )

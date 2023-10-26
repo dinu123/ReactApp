@@ -3,12 +3,14 @@ import { BiTime, BiEditAlt } from 'react-icons/bi';
 import { AiOutlineDelete } from 'react-icons/ai'
 import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client';
-
+import React from 'react';
 import "./card.css";
 import { CardInterface } from "../../../Interfase/card";
 import { useState } from 'react';
 import EditableCard from '../../EdiatbleCard/editableCard';
 import { Circles } from 'react-loader-spinner';
+import { RefreshContext } from '../../../Context/refreshContext';
+import { TENT_CODE } from '../../../Constant';
 
 const EDIT_LOCATION = gql`
 mutation LocationUpdate($locationUpdateId: String!, $requestBody: LocationWriteInput!, $tenant: String!) {
@@ -57,6 +59,7 @@ const Card = (props: any) => {
     const formatedDateTime = getForamtedDate(updatedAt);
     const [isLoading, setIsLoading] = useState(false);
     const [locationUpdate] = useMutation(EDIT_LOCATION);
+    const {setIsListRefresh} = React.useContext(RefreshContext);
 
     const handleEdit = async (updatedValue: any, apiLabel: any) => {
         setIsLoading(true);
@@ -67,9 +70,10 @@ const Card = (props: any) => {
                 variables: {
                     "locationUpdateId": id,
                     "requestBody": { ...updatedData, [apiLabel]: updatedValue },
-                    "tenant": "692627ef-fda8-4203-b108-e8e9f52ad410"
+                    "tenant": TENT_CODE.code
                 },
             });
+            setIsListRefresh();
 
             console.log('Location updated:', result.data.locationUpdate);
             // Handle success or update the UI as needed
@@ -94,12 +98,16 @@ const Card = (props: any) => {
             {props.isEditable && <AiOutlineDelete onClick={() => { props.deleteClick(id) }} />}
             <div className='card-inner-container'>
                 <p className="name">
-                    <span className="first-name">{name}</span>
+               {props.isEditable && <EditableCard label="First Name:" value={props.data.name} blurEvent={handleEdit} apiLabel="name" />}
+                {!props.isEditable && <span className="first-name">{name}</span>}
                 </p>
-                {status && <span className="badge">{status}</span>}
+                 {props.isEditable && <EditableCard label="Status:" className = "badge" value={props.data.status} blurEvent={handleEdit} apiLabel="status" />}
+                 {!props.isEditable && status&& <span className="badge">{status}</span>}
+                
             </div>
             <div>
-                <span className='location'>{npi}</span>
+            {props.isEditable && <EditableCard label="NPI:" value={props.data.npi} blurEvent={handleEdit} apiLabel="npi" />}
+                {!props.isEditable && <span className="location">{npi}</span>}
             </div>
             <div className='time-container card-inner-container'>
                 <p>

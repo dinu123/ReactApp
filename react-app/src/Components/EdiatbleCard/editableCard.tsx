@@ -9,7 +9,7 @@ const EditableCard = (props:any) => {
     return (
         <div>
         <label>{props.label}</label>
-        {!isEditable && <span>{value} <BiEditAlt onClick={() => setIsEditable(true)}/> </span> }
+        {!isEditable && <span className={props.className}>{value} <BiEditAlt onClick={() => setIsEditable(true)}/> </span> }
         {isEditable && <input type='text' value={value} onChange={(e) => setValue(e.target.value) } onBlur={() => {setIsEditable(false); props.blurEvent(value,props.apiLabel)}}/>}
         </div>
     )

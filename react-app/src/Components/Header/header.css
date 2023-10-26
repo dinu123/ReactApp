@@ -19,3 +19,33 @@
 .search-input {
     width: 100%;
 }
+.modal-container>div {
+    display: flex;
+    flex-direction: row;
+}
+.modal-container, .modal-container>div>div {
+    display: flex;
+    flex-direction: column;
+}
+.modal-container>div>div {
+    flex: 1;
+    margin-bottom: 10px;
+}
+.modal-container>div>div:nth-child(2) {
+    padding-left: 10px;
+}
+.modal-container>div>div:nth-child(1) {
+    padding-right: 10px;
+}
+.modal-container>div>div input {
+    padding: 10px;
+    border-radius: 6px;
+    outline: none;
+    border: 1px solid #ccc;
+}
+.modal-container>div>div label {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
