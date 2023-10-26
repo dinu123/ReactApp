@@ -1,7 +1,7 @@
 import React from 'react';
 import './modal.css'
 const Modal = (props:any) => {
-    const {isOpen, onClose, children, onSave} = props;
+    const {isOpen, onClose, children, onSave,isDisable} = props;
   if (!isOpen) return null;
 
   return (
@@ -10,7 +10,7 @@ const Modal = (props:any) => {
         <div className="modal-content">
           {children}
         </div>
-        <button className="modal-save-button" onClick={onSave}>
+        <button className="modal-save-button" onClick={onSave} disabled = {!isDisable}>
           Save
         </button>
         <button className="modal-close-button" onClick={onClose}>

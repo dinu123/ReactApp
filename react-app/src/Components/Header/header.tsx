@@ -28,11 +28,12 @@ const Header = (props:any) => {
     const [isLoading, setIsLoading] = useState(false);
     const [locationCreate] = useMutation(ADD_LOCATION);
     const {setIsListRefresh} = React.useContext(RefreshContext)
+    const [isDisable,setIsDisable] = useState(false);
     const changeHandler = (event:any) => {
             props.searchHandler(event.target.value)
     }
     const [isModalOpen, setModalOpen] = useState(false);
-    const [formInput,setFormInput] = useState({});
+    const [formInput,setFormInput] = useState({name:'',status:''});
 
     const openModal = () => {
       setModalOpen(true);
@@ -42,6 +43,10 @@ const Header = (props:any) => {
       setModalOpen(false);
     };
     const saveHandler = async() => {
+        if(!formInput.name || !formInput.status) {
+            alert("Required Name and Status is empty!!")
+            return;
+        }
         setIsLoading(true);
         try {
             const result = await locationCreate({
@@ -65,6 +70,11 @@ const Header = (props:any) => {
     const changeStateValue = (apilable:any,value:any) => {
         const updatedFormInput = {...formInput,[apilable]:value};
         setFormInput(updatedFormInput)
+        if(updatedFormInput.name && updatedFormInput.status) {
+            setIsDisable(true);
+        }else {
+            setIsDisable(false)
+        }
     }
     return (
         <div className="header-container">
@@ -76,7 +86,7 @@ const Header = (props:any) => {
             <section className="search-container"> 
             <input type='search'placeholder='Search Location...' className='search-input' value={search} onChange={changeHandler} />
             </section>
-            <Modal isOpen={isModalOpen} onClose={closeModal} onSave = {saveHandler}>
+            <Modal isOpen={isModalOpen} onClose={closeModal} onSave = {saveHandler} isDisable = {isDisable}>
                 <section className='modal-container'>
                     <div>
                         <div>

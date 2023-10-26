@@ -42,3 +42,7 @@
     margin-right: 10px;
   }
   
+  modal-save-button:disabled {
+    background-color: #CCC !important;
+    cursor: none !important;
+  }
