@@ -123,25 +123,21 @@ const Card = (props: any) => {
             {props.isEditable && <div className='time-container card-inner-container extra-location-info'>
 
                 <ul>
-                    {props.data.description && <li>
+                   <li>
                         <EditableCard label="Description:" value={props.data.description} blurEvent={handleEdit} apiLabel="description" />
-                    </li>}
-                    {props.data.managingOrganization && <li>
+                    </li>
+                     <li>
                         <EditableCard label="Managing Organization:" value={props.data.managingOrganization} blurEvent={handleEdit} apiLabel="managingOrganization" />
                     </li>
-                    }
-                    {props.data.partOf && <li>
+                     <li>
                         <EditableCard label="Part Of:" value={props.data.partOf} blurEvent={handleEdit} apiLabel="partOf" />
-                    </li>}
-                    {props.data.tag &&
+                    </li>
                         <li>
                             <EditableCard label="Tags:" value={props.data.tag} blurEvent={handleEdit} apiLabel="tag" />
                         </li>
-                    } {props.data.type &&
                         <li>
                             <EditableCard label="Type:" value={props.data.type} blurEvent={handleEdit} apiLabel="type" />
                         </li>
-                    }
                 </ul>
                 {/*  <span className='time-stamp'>{timeStamp}</span> */}
             </div>

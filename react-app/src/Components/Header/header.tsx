@@ -10,6 +10,7 @@ import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { RefreshContext } from '../../Context/refreshContext';
 import { TENT_CODE } from '../../Constant';
+import { Circles } from 'react-loader-spinner';
 
 const ADD_LOCATION = gql`
 mutation LocationCreate($requestBody: LocationWriteInput!, $tenant: String!) {
@@ -87,6 +88,15 @@ const Header = (props:any) => {
             <input type='search'placeholder='Search Location...' className='search-input' value={search} onChange={changeHandler} />
             </section>
             <Modal isOpen={isModalOpen} onClose={closeModal} onSave = {saveHandler} isDisable = {isDisable}>
+            {isLoading && <Circles
+  height="80"
+  width="80"
+  color="#000"
+  ariaLabel="circles-loading"
+  wrapperStyle={{}}
+  wrapperClass="blocks-wrapper"
+  visible={true}
+/>}
                 <section className='modal-container'>
                     <div>
                         <div>
